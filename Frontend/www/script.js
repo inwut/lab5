@@ -1,6 +1,5 @@
 let orderedList = [];
 
-
 for(let i=0; i<localStorage.length; i++){
     const pizza = JSON.parse(localStorage.getItem(localStorage.key(i)));
     pizza["index"] = +localStorage.key(i);
@@ -153,7 +152,11 @@ function filter(button, property){
         }
         count = 8;
     }
-    document.querySelector("header h2").childNodes[0].textContent = button.textContent;
+    if(button.id == "all"){
+        document.querySelector("header h2").childNodes[0].textContent = "Усі піци";
+    }else{
+        document.querySelector("header h2").childNodes[0].textContent = button.textContent;
+    }
     document.querySelector("header h2").childNodes[1].textContent = count;
 
 }
@@ -245,6 +248,7 @@ function reducePizza(item){
     if(pizza.querySelector(".amount").textContent == 0){
         pizza.remove();
         orderedList.splice(orderedList.indexOf(item), 1);
+        document.querySelector(".order-label h4 span").textContent = orderedList.length;
     }
 }
 
@@ -310,7 +314,7 @@ function addToOrderList(pizza){
     const pizzaPrice = document.createElement("span");
     pizzaPrice.classList.add("ordered-price");
     pizzaCost.appendChild(pizzaPrice);
-    pizzaPrice.textContent = (pizza.price + "грн");
+    pizzaPrice.textContent = (pizza.price*pizza.count + "грн");
     const minusButton = document.createElement("button");
     minusButton.classList.add("minus");
     pizzaCost.appendChild(minusButton);
